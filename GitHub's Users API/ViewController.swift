@@ -25,9 +25,9 @@ class ViewController: UIViewController {
                 return
             }
             //have data :convert it to struct
-            var result: Response?
+            var result: [myResults]?
             do {
-                result = try JSONDecoder().decode(Response.self, from: data)
+                result = try JSONDecoder().decode([myResults].self, from: data)
               }
             catch {
                 print("failed to convert \(error.localizedDescription)")
@@ -35,15 +35,16 @@ class ViewController: UIViewController {
             guard let json = result else {
                 return
                }
-            print ("\(json.results.login)")
+            for i in json{
+                print ("\(i.id) \(i.login) \n")
+
+            }
+            print ("------")
         })
         task.resume()
     }
     //codable protocol: convert data we get from url to struct
-    struct Response: Codable {
-        let results: myResults
-        
-    }
+ 
     struct myResults: Codable {
         let login: String
         let id: Int
